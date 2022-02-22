@@ -1,0 +1,24 @@
+job "gpu-test" {
+  datacenters = ["ulanc-gpu"]  # Use only the machines with GPUs in. 
+  type = "batch" #This means that nomad will be okay with the script exiting upon completion. If this is omitted, it is assumed to be a service. 
+
+  group "smi" {
+    task "smi" {
+      driver = "docker"    
+      config {
+        image = "nvidia/cuda:9.0-base"     # This will pull this docker image from docker hub.  other locations can be specified.
+        command = "nvidia-smi"             # run this command in the image.  
+    		#auth {                            # if the docker repository requires auth, heres where. 
+      	#	username = "YourDockerUName"
+      	#	password = "YourDockerPassword"
+    		#}
+      }
+
+      resources { 
+        device "nvidia/gpu" {
+          count=1           # here's how many and of what type GPU we need. 
+        }
+      }
+    }
+  }
+}
