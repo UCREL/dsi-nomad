@@ -1,0 +1,24 @@
+job "gpu-run-test" {
+  datacenters = ["ulanc-gpu"]  # Use only the machines with GPUs in. 
+  type = "batch" #This means that nomad will be okay with the script exiting upon completion. If this is omitted, it is assumed to be a service. 
+
+  group "smi" {
+    task "smi" {
+      driver = "docker"    
+      config {
+        image = "st7ma784/expbase"     # This will pull this docker image from docker hub.  other locations can be specified.
+        argument = "Exp3SemanticLoss/runVQASweep.py"             # run this argument - entry point is already 'conda run -n pypytorch python'  
+    		auth {                            # if the docker repository requires auth, heres where. 
+      		username = "st7ma784"
+      		password = "What1999"
+    		}
+      }
+
+      resources { 
+        device "nvidia/gpu" {
+          count=1           # here's how many and of what type GPU we need. 
+        }
+      }
+    }
+  }
+}
