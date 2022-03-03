@@ -1,0 +1,26 @@
+job "jupyterlab" {
+  datacenters = ["dev"]
+  group "jupyter" {
+    count = 4
+    network {
+      port "jupyter" {
+        to = 8091
+      }
+    }
+    task "jupyter-docker" {
+      driver = "docker"
+      config {
+        # A custom cuda+jupyter image but anything will do
+        image = "cuda-centos8-jupyter-pytorch"
+        ports = ["jupyter"]
+      }
+      resources {
+        cpu    = 500
+        memory = 2048
+         device "nvidia/gpu" {
+          count = 1
+         }
+      }
+    }
+  }
+}
