@@ -7,8 +7,9 @@ job "gpu-run-test" {
       driver = "docker"    
       config {
         image = "st7ma784/expbase"     # This will pull this docker image from docker hub.  other locations can be specified.
-        argument = "Exp3SemanticLoss/runVQASweep.py"             # run this argument - entry point is already 'conda run -n pypytorch python'  
-    		auth {                            # if the docker repository requires auth, heres where. 
+        #args = ["Exp3SemanticLoss/runVQASweep.py"]             # run this argument - entry point is already 'conda run -n pypytorch python'  
+    		command = "cd MultiTask && conda run -n pypytorch python runVQASweep.py"
+        auth {                            # if the docker repository requires auth, heres where. 
       		username = "st7ma784"
       		password = "What1999"
     		}
