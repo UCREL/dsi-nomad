@@ -1,7 +1,6 @@
 job "jupyterlab" {
-  datacenters = ["dev"]
+  datacenters = ["ulanc-gpu"]
   group "jupyter" {
-    count = 4
     network {
       port "jupyter" {
         to = 8091
@@ -11,7 +10,7 @@ job "jupyterlab" {
       driver = "docker"
       config {
         # A custom cuda+jupyter image but anything will do
-        image = "cuda-centos8-jupyter-pytorch"
+        image = "dagshub/ml-workspace-gpu"
         ports = ["jupyter"]
       }
       resources {
