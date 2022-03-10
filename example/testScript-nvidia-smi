@@ -15,7 +15,7 @@ job "gpu-test" {
       }
 
       resources { 
-        device "nvidia/gpu" {
+        device "nvidia/gpu/1060" {
           count=1           # here's how many and of what type GPU we need. 
         }
       }
